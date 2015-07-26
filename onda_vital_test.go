@@ -10,6 +10,7 @@ func TestSearch(t *testing.T) {
 	tests["die hard"] = "Jungla de cristal"
 	tests["rapido y furioso"] = "A todo gas"
 	tests["white chicks"] = "Dos rubias de pelo en pecho"
+	tests["bomberman"] = "" //dont crash
 
 	for k, v := range tests {
 		title, _ := Search(k)

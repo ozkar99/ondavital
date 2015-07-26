@@ -16,11 +16,7 @@ func main() {
 		}
 
 		q := r.FormValue("q")
-		result, err := ondavital.Search(q)
-		if err != nil {
-			result = "Sorry, Error..."
-		}
-
+		result, _ := ondavital.Search(q)
 		t.Execute(w, result)
 	})
 

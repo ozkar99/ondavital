@@ -14,6 +14,7 @@ func Search(query string) (string, error) {
 	if query == "" {
 		return "", nil
 	}
+
 	url := wikipedia_link + url.QueryEscape(query)
 	return crawlLink(url, nil)
 }
@@ -27,13 +28,15 @@ func crawlLink(link string, c chan string) (string, error) {
 
 	if inner_text == "" {
 
-		if doc.Find(".ambox").Text() == "" {
+		/* we are on the searched page */
+		if doc.Find(".ambox .mw-disambig").Text() == "" {
 			if c != nil {
 				c <- "" //error
 			}
 			return "", ovError{"ERROR FINDING PAGE", "", []string{""}}
 		}
 
+		/* test if we are on  a suggestion page */
 		jQueryLinks := "#mw-content-text ul a"
 		links := doc.Find(jQueryLinks).Map(func(i int, a *goquery.Selection) string {
 			link_path, _ := a.Attr("href")
