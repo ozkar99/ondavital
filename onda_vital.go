@@ -11,6 +11,9 @@ const host_link = "https://es.wikipedia.org"
 const wikipedia_link = host_link + "/w/index.php?profile=default&search="
 
 func Search(query string) (string, error) {
+	if query == "" {
+		return "", nil
+	}
 	url := wikipedia_link + url.QueryEscape(query)
 	return crawlLink(url, nil)
 }
