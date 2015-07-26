@@ -30,4 +30,10 @@ func main() {
 
   fmt.Println(val)
 }
+
+//> Jugla de Cristal
+// WTF?
 ```
+
+
+![Img](http://i.imgur.com/Zt0T4SY.png)
