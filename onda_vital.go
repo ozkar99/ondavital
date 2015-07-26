@@ -1,4 +1,4 @@
-package main
+package ondavital
 
 import (
 	"github.com/PuerkitoBio/goquery"
