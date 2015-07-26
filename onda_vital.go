@@ -4,6 +4,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"net/url"
 	"regexp"
+	"strings"
 )
 
 const host_link = "https://es.wikipedia.org"
@@ -50,6 +51,7 @@ func crawlLink(link string, c chan string) (string, error) {
 	if len(results) > 1 {
 		/* here we can encounter spain in either the first or the second position*/
 		nombre := results[2]
+		nombre = strings.TrimSpace(nombre)
 
 		if c != nil {
 			c <- nombre
