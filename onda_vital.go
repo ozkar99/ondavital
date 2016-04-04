@@ -7,15 +7,15 @@ import (
 	"strings"
 )
 
-const host_link = "https://es.wikipedia.org"
-const wikipedia_link = host_link + "/w/index.php?profile=default&search="
+const hostLink = "https://es.wikipedia.org"
+const wikipediaLink = hostLink + "/w/index.php?profile=default&search="
 
 func Search(query string) (string, error) {
 	if query == "" {
 		return "", nil
 	}
 
-	url := wikipedia_link + url.QueryEscape(query)
+	url := wikipediaLink + url.QueryEscape(query)
 	return crawlLink(url, nil)
 }
 
@@ -24,9 +24,9 @@ func crawlLink(link string, c chan string) (string, error) {
 	doc, _ := goquery.NewDocument(link)
 
 	jQueryString := ".infobox tr td:contains('España')"
-	inner_text := doc.Find(jQueryString).Text()
+	innerText := doc.Find(jQueryString).Text()
 
-	if inner_text == "" {
+	if innerText == "" {
 
 		/* we are on the searched page */
 		if doc.Find(".ambox .mw-disambig").Text() == "" {
@@ -39,8 +39,8 @@ func crawlLink(link string, c chan string) (string, error) {
 		/* test if we are on  a suggestion page */
 		jQueryLinks := "#mw-content-text ul a"
 		links := doc.Find(jQueryLinks).Map(func(i int, a *goquery.Selection) string {
-			link_path, _ := a.Attr("href")
-			return host_link + link_path
+			linkPath, _ := a.Attr("href")
+			return hostLink + linkPath
 		})
 
 		if len(links) > 0 {
@@ -52,7 +52,7 @@ func crawlLink(link string, c chan string) (string, error) {
 	}
 
 	re := regexp.MustCompile(`(.*\))?(.*)\(España\)`)
-	results := re.FindStringSubmatch(inner_text)
+	results := re.FindStringSubmatch(innerText)
 
 	if len(results) > 1 {
 		/* here we can encounter spain in either the first or the second position*/
@@ -68,7 +68,7 @@ func crawlLink(link string, c chan string) (string, error) {
 	if c != nil {
 		c <- "" //error
 	}
-	return "", ovError{"ERROR PARSING REGEXP", inner_text, results}
+	return "", ovError{"ERROR PARSING REGEXP", innerText, results}
 }
 
 func recurseLinks(links []string) (string, error) {
