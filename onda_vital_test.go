@@ -15,6 +15,7 @@ func TestSearch(t *testing.T) {
 	for k, v := range tests {
 		title, _ := Search(k)
 		if title != v {
+			_ = "breakpoint"
 			t.Errorf("Search(%s)== expected: %s, got: %s\n", k, v, title)
 		}
 	}
